@@ -18,6 +18,6 @@ RUN git clone https://github.com/creationix/nvm.git ~/.nvm
 # Bundle app source
 COPY . .
 RUN chmod -R 777 zivame_start.sh
-#EXPOSE 3000
-ENTRYPOINT ["./zivame_start.sh"]
+EXPOSE 3000
+ENTRYPOINT ["/bin/sh","zivame_start.sh"]
 CMD []
