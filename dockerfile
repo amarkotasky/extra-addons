@@ -1,4 +1,4 @@
-FROM node:8
+FROM mhart/alpine-node:8
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -9,13 +9,15 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install
+RUN apk update && \
+    apk add git
 RUN git clone https://github.com/creationix/nvm.git ~/.nvm
 # If you are building your code for production
 # RUN npm install --only=production
 
 # Bundle app source
 COPY . .
-RUN chmod -R 777 start.sh
-EXPOSE 3000
+RUN chmod -R 777 zivame_start.sh
+#EXPOSE 3000
 ENTRYPOINT ["./zivame_start.sh"]
 CMD []
