@@ -17,4 +17,5 @@ RUN git clone https://github.com/creationix/nvm.git ~/.nvm
 COPY . .
 RUN chmod -R 777 start.sh
 EXPOSE 3000
-CMD [ "npm", "start" ]
+ENTRYPOINT ["./zivame_start.sh"]
+CMD []
