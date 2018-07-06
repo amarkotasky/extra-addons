@@ -11,6 +11,9 @@ COPY package*.json ./
 RUN npm install
 RUN apk update && \
     apk add git
+    
+RUN   apk add ca-certificates wget \                                                                                                                                                                                                      
+  &&   update-ca-certificates      
 RUN git clone https://github.com/creationix/nvm.git ~/.nvm
 # If you are building your code for production
 # RUN npm install --only=production
