@@ -33,4 +33,5 @@ if [ $? == 0 ] ;then echo "Npm Updated Successfully";else echo "Npm Update Faile
 ######                                Starting Node Server
 ###################################################################################################
 echo "Starting Server"
+npm install nodemon --save
 npm start
