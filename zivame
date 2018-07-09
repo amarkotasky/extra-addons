@@ -12,7 +12,7 @@
 
 DESC="test script"
 NAME=newstack
-App_path='/home/amar/dev'
+App_path='/opt/zivame/app'
 #DAEMON=
 
 CMD="$1"
@@ -33,42 +33,42 @@ validate_compose_1_6_plus
 
 case "${CMD}" in
     start)
-        start_status=$(nodeVersion=8.4.0 docker-compose -f /home/amar/dev/docker-compose.yml up -d)
+        start_status=$(nodeVersion=8.4.0 docker-compose -f $App_path/docker-compose.yml up -d)
         echo "start_status"
-        status=$(docker-compose -f /home/amar/dev/docker-compose.yml ps)
+        status=$(docker-compose -f $App_path/docker-compose.yml ps)
         echo "$status" 
         echo "Staring ...."
         ;;
     restart)
-        restop_status=$(docker-compose -f /home/amar/dev/docker-compose.yml down)
+        restop_status=$(docker-compose -f $App_path/docker-compose.yml down)
         echo "start_status"
-        restart_status=$(nodeVersion=8.4.0 docker-compose -f /home/amar/dev/docker-compose.yml up -d)
+        restart_status=$(nodeVersion=8.4.0 docker-compose -f $App_path/docker-compose.yml up -d)
         echo "$status" 
         echo "Staring ...."
         ;;
     scale)
-        count_before=$(sudo docker-compose -f /home/amar/dev/docker-compose.yml ps |wc -l)
-        docker-compose -f /home/amar/dev/docker-compose.yml scale zivame=$2 
+        count_before=$(sudo docker-compose -f $App_path/docker-compose.yml ps |wc -l)
+        docker-compose -f $App_path/docker-compose.yml scale zivame=$2 
         # if [ $? == 0 ] ;then 
         # echo "Scaled Successfully";
-        # . /home/amar/dev/updateNginxConfig.sh $App_path $count_before
+        # . $App_path/updateNginxConfig.sh $App_path $count_before
         # else echo "Scaling Failed !!!!";
         # fi
         sudo docker exec -it zivame_nginx /bin/bash -c 'service nginx reload'
         echo "$scale_status"       
         ;;        
     stop)
-        docker-compose -f /home/amar/dev/docker-compose.yml down 
+        docker-compose -f $App_path/docker-compose.yml down 
         ;;
     rebuild)
-        docker-compose -f /home/amar/dev/docker-compose.yml build 
+        docker-compose -f $App_path/docker-compose.yml build 
         ;;
     state)
-        status=$(docker-compose -f /home/amar/dev/docker-compose.yml ps)
+        status=$(docker-compose -f $App_path/docker-compose.yml ps)
         echo "$status" 
         ;;    
     logs)
-        log_status=$(docker-compose -f /home/amar/dev/docker-compose.yml logs)
+        log_status=$(docker-compose -f $App_path/docker-compose.yml logs)
         echo "$log_status" 
         ;;
     *)
