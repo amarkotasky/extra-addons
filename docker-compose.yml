@@ -1,11 +1,14 @@
 version: '3'
 services:
   zivame:
-    build: .
+    build: 
+      context: .
+      args:
+        version: '8.4.0'
     # ports:
     #  - "3007:3000"
     environment:
-      - nodeVersion
+      - nodeVersion         
     # deploy:
     #   replicas: 2 
     # depends_on:
