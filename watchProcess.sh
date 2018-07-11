@@ -1,6 +1,11 @@
-command="$1"
+#!/bin/bash
+
+. /var/lib/jenkins/.nvm/nvm.sh 
+. environment.sh 
+nvm use "$1"
+command="$2"
 log="watchProcess.log"
-match="$2"
+match="$3"
 
 $command > "$log" 2>&1 &
 pid=$!
