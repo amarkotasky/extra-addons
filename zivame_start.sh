@@ -6,6 +6,9 @@
 chmod -R 777 environment.sh
 . environment.sh
 
+echo ". environment.sh" >> ~/.bashrc \
+&& . ~/.bashrc
+
 echo $INT_CDN_URI
 ###################################################################################################
 ######                                    Set .nvm
