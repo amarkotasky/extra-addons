@@ -30,9 +30,9 @@ RUN . ~/.nvm/nvm.sh \
        && npm update 
        
 RUN chmod -R 777 zivame_start.sh
-EXPOSE 8000 8003
+EXPOSE 8007 8003
 
 
-ENTRYPOINT ["tail", "-f", "/dev/null"]
-# ENTRYPOINT ["/bin/sh","zivame_start.sh"]
+# ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["/bin/bash","zivame_start.sh"]
 CMD []
