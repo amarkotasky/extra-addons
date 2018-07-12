@@ -5,8 +5,8 @@ services:
       context: .
       args:
         version: '8.4.0'
-    # ports:
-        - "8800+:8007"
+    ports:
+      - 9007-9012:8007
     environment:
       - nodeVersion         
     # deploy:
