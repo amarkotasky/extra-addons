@@ -5,10 +5,12 @@ services:
       context: .
       args:
         version: '8.4.0'
-    ports:
+    ports: 
       - 9007-9012:8007
     environment:
-      - nodeVersion         
+      - nodeVersion   
+    volumes:
+      - "/tmp/zivame_logs/${logpath}:/tmp"        
     # deploy:
     #   replicas: 2 
     # depends_on:
