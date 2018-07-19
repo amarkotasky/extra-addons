@@ -4,7 +4,7 @@ services:
     build: 
       context: .
       args:
-        version: '8.4.0'
+        version: "${nversion}"
     ports: 
       - 9007-9012:8007
     environment:
