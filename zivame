@@ -44,13 +44,13 @@ case "${CMD}" in
     restart)
         restop_status=$(logpath="${LogPath}" docker-compose -f $App_path/docker-compose.yml down)
         echo "start_status"
-        restart_status=$(nodeVersion=8.4.0 docker-compose -f $App_path/docker-compose.yml up -d)
+        restart_status=$(logpath="${LogPath}" docker-compose -f $App_path/docker-compose.yml up -d)
         echo "$status" 
         echo "Staring ...."
         ;;
     scale)
         count_before=$(logpath="${LogPath}" sudo docker-compose -f $App_path/docker-compose.yml ps |wc -l)
-        docker-compose -f $App_path/docker-compose.yml scale zivame=$2 
+        logpath=$3 docker-compose -f $App_path/docker-compose.yml scale zivame=$2
         # if [ $? == 0 ] ;then 
         # echo "Scaled Successfully";
         # . $App_path/updateNginxConfig.sh $App_path $count_before
