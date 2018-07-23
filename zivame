@@ -17,7 +17,7 @@ App_path='/opt/zivame/app'
 
 CMD="$1"
 NodeVersion="$2"
-LogPath="$3"
+LogPath="$2"
 
 # DEV mode requires V2 docker-compose as it uses `docker-compose run` and needs
 # a different order to containers start (i.e. nginx needs to be started before
@@ -35,7 +35,7 @@ validate_compose_1_6_plus
 
 case "${CMD}" in
     start)
-        start_status=$(nversion="${NodeVersion}" logpath="${LogPath}" docker-compose -f $App_path/docker-compose.yml up -d)
+        start_status=$(logpath="${LogPath}" docker-compose -f $App_path/docker-compose.yml up -d)
         echo "start_status"
         status=$(docker-compose -f $App_path/docker-compose.yml ps)
         echo "$status" 
@@ -49,7 +49,7 @@ case "${CMD}" in
         echo "Staring ...."
         ;;
     scale)
-        count_before=$(sudo docker-compose -f $App_path/docker-compose.yml ps |wc -l)
+        count_before=$(logpath="${LogPath}" sudo docker-compose -f $App_path/docker-compose.yml ps |wc -l)
         docker-compose -f $App_path/docker-compose.yml scale zivame=$2 
         # if [ $? == 0 ] ;then 
         # echo "Scaled Successfully";
@@ -66,7 +66,7 @@ case "${CMD}" in
         nversion="${NodeVersion}" docker-compose -f $App_path/docker-compose.yml build 
         ;;
     state)
-        status=$(nversion=8.4.0 docker-compose -f $App_path/docker-compose.yml ps)
+        status=$(docker-compose -f $App_path/docker-compose.yml ps)
         echo "$status" 
         ;;    
     logs)
