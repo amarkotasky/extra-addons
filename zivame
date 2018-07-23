@@ -17,6 +17,7 @@ App_path='/opt/zivame/app'
 
 CMD="$1"
 NodeVersion="$2"
+LogPath="$3"
 
 # DEV mode requires V2 docker-compose as it uses `docker-compose run` and needs
 # a different order to containers start (i.e. nginx needs to be started before
@@ -34,14 +35,14 @@ validate_compose_1_6_plus
 
 case "${CMD}" in
     start)
-        start_status=$(nversion="${NodeVersion}" docker-compose -f $App_path/docker-compose.yml up -d)
+        start_status=$(nversion="${NodeVersion}" logpath="${LogPath}" docker-compose -f $App_path/docker-compose.yml up -d)
         echo "start_status"
         status=$(docker-compose -f $App_path/docker-compose.yml ps)
         echo "$status" 
         echo "Staring ...."
         ;;
     restart)
-        restop_status=$(docker-compose -f $App_path/docker-compose.yml down)
+        restop_status=$(logpath="${LogPath}" docker-compose -f $App_path/docker-compose.yml down)
         echo "start_status"
         restart_status=$(nodeVersion=8.4.0 docker-compose -f $App_path/docker-compose.yml up -d)
         echo "$status" 
