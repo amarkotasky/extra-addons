@@ -50,7 +50,7 @@ case "${CMD}" in
         ;;
     scale)
         count_before=$(logpath="${LogPath}" sudo docker-compose -f $App_path/docker-compose.yml ps |wc -l)
-        if [ "$2" -gt 1 ]; then
+        if [[ "$2" -gt 1 || "$(($count_before - $2))" -ne 0 ]]; then
         for (( i=1; i <= $2; ++i )); do
         logpath=$3_$i docker-compose -f $App_path/docker-compose.yml scale zivame=$i ;
         done
