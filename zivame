@@ -50,7 +50,9 @@ case "${CMD}" in
         ;;
     scale)
         count_before=$(logpath="${LogPath}" sudo docker-compose -f $App_path/docker-compose.yml ps |wc -l)
-        logpath=$3 docker-compose -f $App_path/docker-compose.yml scale zivame=$2
+        for (( i=1; i <= $2; ++i )); do
+        logpath=$3_$i docker-compose -f $App_path/docker-compose.yml scale zivame=$i ;
+        done
         # if [ $? == 0 ] ;then 
         # echo "Scaled Successfully";
         # . $App_path/updateNginxConfig.sh $App_path $count_before
