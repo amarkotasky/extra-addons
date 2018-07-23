@@ -33,7 +33,7 @@ validate_compose_1_6_plus
 
 case "${CMD}" in
     start)
-        start_status=$(nodeVersion=8.4.0 docker-compose -f $App_path/docker-compose.yml up -d)
+        start_status=$(nversion=8.4.0 docker-compose -f $App_path/docker-compose.yml up -d)
         echo "start_status"
         status=$(docker-compose -f $App_path/docker-compose.yml ps)
         echo "$status" 
@@ -61,10 +61,10 @@ case "${CMD}" in
         docker-compose -f $App_path/docker-compose.yml down 
         ;;
     rebuild)
-        docker-compose -f $App_path/docker-compose.yml build 
+        nversion=8.4.0 docker-compose -f $App_path/docker-compose.yml build 
         ;;
     state)
-        status=$(docker-compose -f $App_path/docker-compose.yml ps)
+        status=$(nversion=8.4.0 docker-compose -f $App_path/docker-compose.yml ps)
         echo "$status" 
         ;;    
     logs)
