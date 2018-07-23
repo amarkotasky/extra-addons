@@ -10,7 +10,7 @@ services:
     environment:
       - nodeVersion   
     volumes:
-      - "${logpath}:/tmp"        
+      - "${logpath}:/mnt/node-logs"        
     # deploy:
     #   replicas: 2 
     # depends_on:
