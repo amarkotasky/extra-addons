@@ -10,7 +10,7 @@ services:
     environment:
       - nodeVersion   
     volumes:
-      - "/tmp/zivame_logs/${logpath}:/tmp"        
+      - "${logpath}:/tmp"        
     # deploy:
     #   replicas: 2 
     # depends_on:
