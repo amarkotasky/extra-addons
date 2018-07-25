@@ -77,7 +77,7 @@ case "${CMD}" in
         for port in $ports; do while(true); do if(curl -I localhost:$port|head -n1|grep 200) ;then break;else sleep 5;fi; done  done
         ;;  
     config-reload)
-        ports=$(sudo docker-compose ps |awk '{print $6}' | grep 0.0.0.0 | grep -o -P '(?<=:).*(?=-)') ;upstream="";for i in $ports; do upstream+="server 13.229.23.98:$i;"; done ; ngxupstream="upstream app_upstream { $upstream }";echo "$ngxupstream";sudo sed -i -E "s/(upstream app_upstream)+.\{(.*?)\}/$ngxupstream/" /etc/nginx/sites-enabled/default && sudo  nginx -t && && sudo service nginx reload
+        ports=$(sudo docker-compose ps |awk '{print $6}' | grep 0.0.0.0 | grep -o -P '(?<=:).*(?=-)') ;upstream="";for i in $ports; do upstream+="server 13.229.23.98:$i;"; done ; ngxupstream="upstream app_upstream { $upstream }";echo "$ngxupstream";sudo sed -i -E "s/(upstream app_upstream)+.\{(.*?)\}/$ngxupstream/" /etc/nginx/sites-enabled/default && sudo  nginx -t && sudo service nginx reload
         ;;     
     logs)
         log_status=$(docker-compose -f $App_path/docker-compose.yml logs)
