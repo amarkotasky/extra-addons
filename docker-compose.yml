@@ -16,13 +16,13 @@ services:
     # depends_on:
     #   - nginx
     # container_name: "${pro_name}_app"           
-  nginx:
-    image: nginx
-    ports:
-      - "8900:80"
-    volumes:
-      - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
-      - "./nginx/www:/data/www"      
+  # nginx:
+  #  image: nginx
+  #  ports:
+  #    - "8900:80"
+  #  volumes:
+  #    - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+  #    - "./nginx/www:/data/www"      
     # links:
     #   - zivame 
-    container_name: "zivame_nginx"
+  #  container_name: "zivame_nginx"
