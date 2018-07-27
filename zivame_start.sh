@@ -7,7 +7,7 @@ chmod -R 777 environment.sh
 
 echo ". environment.sh" >> ~/.bashrc \
 && . ~/.bashrc
-
+. environment.sh
 echo $INT_CDN_URI
 
 export NVM_DIR="$HOME/.nvm"
