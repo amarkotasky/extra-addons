@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 
-# COPY package*.json ./
+COPY package*.json ./
 
 EXPOSE 8007 8003
 
@@ -23,15 +23,17 @@ RUN . ~/.bashrc \
     && nvm install ${version} 
 
 # Bundle app source
-COPY . .
+
 
 RUN . ~/.bashrc \
     && nvm use ${version} \
     && npm update 
        
+
+
+COPY . .
+
 RUN chmod +x zivame_start.sh
-
-
 
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
 ENTRYPOINT ["/bin/bash","zivame_start.sh"]
