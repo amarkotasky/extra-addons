@@ -83,6 +83,10 @@ case "${CMD}" in
         log_status=$(docker-compose -f $App_path/docker-compose.yml logs)
         echo "$log_status" 
         ;;
+    clean)
+        clean_status=$(sudo docker rmi -f $(sudo docker images | grep "<none>" | awk "{print \$3}"))
+        echo "$clean_status" 
+        ;;
     *)
         echo
         echo "Usage: $0 start|stop|rebuild|logs|health|config-reload dev"
