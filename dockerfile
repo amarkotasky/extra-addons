@@ -1,5 +1,4 @@
-
-FROM node:8
+FROM ubuntu
 ARG version
 # ENV var=${var}
 
@@ -7,32 +6,32 @@ ARG version
 WORKDIR /usr/src/app
 
 # Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
+
 # COPY package*.json ./
 
-# RUN apt-get update   
-RUN git clone https://github.com/creationix/nvm.git ~/.nvm
-RUN echo ". ~/.nvm/nvm.sh" >> ~/.bashrc \
-           && .  ~/.bashrc
+EXPOSE 8007 8003
+
+RUN apt-get update \
+    && apt-get install -y wget
+
+RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash 
+
+
 # If you are building your code for production
 
-RUN . ~/.nvm/nvm.sh \
-      && nvm --version \
-      && nvm install ${version}
+RUN . ~/.bashrc \
+    && nvm install ${version} 
 
 # Bundle app source
 COPY . .
 
-RUN . ~/.nvm/nvm.sh \
-       && nvm use ${version} \
-       && node -v \
-       && npm update 
+RUN . ~/.bashrc \
+    && nvm use ${version} \
+    && npm update 
        
-RUN chmod -R 777 zivame_start.sh
-EXPOSE 8007 8003
+RUN chmod +x zivame_start.sh
 
 
-# ENTRYPOINT ["tail", "-f", "/dev/null"]
+
+#ENTRYPOINT ["tail", "-f", "/dev/null"]
 ENTRYPOINT ["/bin/bash","zivame_start.sh"]
-CMD []
