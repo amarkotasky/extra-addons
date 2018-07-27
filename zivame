@@ -58,8 +58,6 @@ case "${CMD}" in
         else
         echo "Already Scaled to 1 so skipped!!!"
         fi
-
-        sudo docker exec -it zivame_nginx /bin/bash -c 'service nginx reload'
         echo "$scale_status"       
         ;;
     stop)
