@@ -21,5 +21,5 @@ npm --version
 ######                                Starting Node Server
 ###################################################################################################
 echo "Starting Server"
-npm install -g nodemon
-nodemon --trace-warnings server.js
+npm run startDev
+# nodemon --trace-warnings server.js
