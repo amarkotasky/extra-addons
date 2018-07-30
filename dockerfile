@@ -31,13 +31,15 @@ RUN . ~/.bashrc \
        
 VOLUME ["/usr/src/app/app/log"]
 
-COPY . .
-
-RUN chmod +x zivame_start.sh
 
 RUN . ~/.bashrc \
     && nvm use ${version} \
-    && npm install pm2 -g
+    && npm install pm2 -g \
+    && npm install -g nodemon
+
+COPY . .
+
+RUN chmod +x zivame_start.sh
 
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
 ENTRYPOINT ["/bin/bash","zivame_start.sh"]
