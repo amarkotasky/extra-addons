@@ -29,7 +29,7 @@ RUN . ~/.bashrc \
     && nvm use ${version} \
     && npm update 
        
-
+VOLUME ["/usr/src/app/app/log"]
 
 COPY . .
 
