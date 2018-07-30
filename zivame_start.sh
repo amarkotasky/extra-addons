@@ -29,5 +29,5 @@ echo "Starting Server"
 # npm install -g nodemon
 # npm install nodemon --save
 # npm run startDev
-nodemon --trace-warnings server.js
-# pm2 start process.json --only Devel --update-env
+# nodemon --trace-warnings server.js
+pm2 start server.js
