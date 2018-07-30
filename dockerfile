@@ -35,5 +35,9 @@ COPY . .
 
 RUN chmod +x zivame_start.sh
 
+RUN . ~/.bashrc \
+    && nvm use ${version} \
+    && npm install pm2 -g
+
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
 ENTRYPOINT ["/bin/bash","zivame_start.sh"]
