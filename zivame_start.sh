@@ -29,5 +29,9 @@ echo "Starting Server"
 # npm install -g nodemon
 # npm install nodemon --save
 # npm run startDev
-nodemon --trace-warnings server.js
+# nodemon --trace-warnings server.js
 # pm2 start server.js
+pm2_home=$(which pm2);
+cwd=$(pwd)
+start-stop-daemon --start --chuid root -n zivapp --start --exec /root/.nvm/versions/node/v8.4.0/bin/pm2 -- start $cwd/process.json --only Devel --update-env
+sleep infinity
