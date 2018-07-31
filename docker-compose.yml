@@ -6,11 +6,11 @@ services:
       args:
         version: "${nversion}"
     ports: 
-      - 9007-9012:8007
+      - 9007-9012:8000
     environment:
       - nodeVersion   
     volumes:
-      - "${logpath}:/usr/src/app/app/log"        
+      - "${logpath}:/home/ubuntu/newstack/app/log"        
     # deploy:
     #   replicas: 2 
     # depends_on:
