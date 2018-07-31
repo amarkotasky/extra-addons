@@ -3,13 +3,13 @@ ARG version
 # ENV var=${var}
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /home/ubuntu/newstack
 
 # Install app dependencies
 
 COPY package*.json ./
 
-EXPOSE 8007 8003
+EXPOSE 8000 8003
 
 RUN apt-get update \
     && apt-get install -y wget
@@ -29,7 +29,7 @@ RUN . ~/.bashrc \
     && nvm use ${version} \
     && npm update 
        
-VOLUME ["/usr/src/app/app/log"]
+VOLUME ["/home/ubuntu/newstack/app/log"]
 
 
 RUN . ~/.bashrc \
