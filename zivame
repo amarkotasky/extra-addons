@@ -41,6 +41,13 @@ case "${CMD}" in
         echo "$status" 
         echo "Staring ...."
         ;;
+    start-stage)
+        start_status=$(logpath="${LogPath}" docker-compose -f $App_path/docker-compose-stage.yml up -d)
+        echo "start_status"
+        status=$(docker-compose -f $App_path/docker-compose-stage.yml ps)
+        echo "$status" 
+        echo "Staring ...."
+        ;;        
     restart)
         restop_status=$(logpath="${LogPath}" docker-compose -f $App_path/docker-compose.yml down)
         echo "start_status"
@@ -66,6 +73,9 @@ case "${CMD}" in
     rebuild)
         nversion="${NodeVersion}" docker-compose -f $App_path/docker-compose.yml build 
         ;;
+    rebuild-stage)
+        nversion="${NodeVersion}" docker-compose -f $App_path/docker-compose-stage.yml build 
+        ;;        
     state)
         status=$(docker-compose -f $App_path/docker-compose.yml ps)
         echo "$status" 

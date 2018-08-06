@@ -1,0 +1,19 @@
+version: '3'
+services:
+  zivame:
+    build: 
+      context: .
+      args:
+        version: "${nversion}"
+    ports: 
+      - 9007-9012:8000
+    environment:
+      - nodeVersion   
+    volumes:
+      - "${logpath}:/home/ubuntu/newstack/app/log"        
+
+  ziva-redis:
+    image: redis:alpine
+    # Command below to prevent this issue https://github.com/docker-library/redis/issues/63 experienced on c4t16225
+    command: redis-server --bind 0.0.0.0
+    restart: unless-stopped
