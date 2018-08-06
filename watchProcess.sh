@@ -1,7 +1,13 @@
 #!/bin/bash
 
-. /var/lib/jenkins/.nvm/nvm.sh 
-. environment.sh 
+. /var/lib/jenkins/.nvm/nvm.sh
+
+if [ "$3" == "dev"  ]; then
+   . environment.sh
+else
+   . stageEnv.sh
+fi
+
 nvm use "$1"
 command="$2"
 log="watchProcess.log"
