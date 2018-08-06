@@ -2,7 +2,7 @@
 
 . /var/lib/jenkins/.nvm/nvm.sh
 
-if [ "$3" == "dev"  ]; then
+if [ "$4" == "dev"  ]; then
    . environment.sh
 else
    . stageEnv.sh
