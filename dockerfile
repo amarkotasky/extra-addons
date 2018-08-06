@@ -29,7 +29,7 @@ RUN . ~/.bashrc \
     && nvm use ${version} \
     && npm update 
        
-VOLUME ["/home/ubuntu/newstack/app/log"]
+VOLUME ["/home/ubuntu/newstack/app/log", "/mnt/node-logs/log"]
 
 
 RUN . ~/.bashrc \
