@@ -8,7 +8,7 @@ chmod -R 777 environment.sh
 echo ". environment.sh" >> ~/.bashrc \
 && . ~/.bashrc
 . environment.sh
-echo $INT_CDN_URI
+echo $INT_APP_Env
 
 export NVM_DIR="$HOME/.nvm"
  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -33,5 +33,10 @@ echo "Starting Server"
 # pm2 start server.js
 pm2_home=$(which pm2);
 cwd=$(pwd)
-start-stop-daemon --start --chuid root -n zivapp --start --exec /root/.nvm/versions/node/v8.4.0/bin/pm2 -- start $cwd/process.json --only Devel --update-env
+
+if [ "$INT_APP_Env" == "Devel"  ]; then
+   start-stop-daemon --start --chuid root -n zivapp --start --exec /root/.nvm/versions/node/v8.4.0/bin/pm2 -- start $cwd/process.json --only Devel --update-env
+else
+   start-stop-daemon --start --chuid root -n zivapp --start --exec /root/.nvm/versions/node/v8.4.0/bin/pm2 -- start $cwd/process.json --only Stage --update-env
+fi
 sleep infinity
