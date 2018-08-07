@@ -35,11 +35,25 @@ validate_compose_1_6_plus
 
 case "${CMD}" in
     start)
+        s1=$(curl -I http://newstack.zivame.com |head -n1|grep 200)
+        s2="200"
+        if [[ $s1 == *"$s2"* ]]
+        then
+        echo "${LogPath}"
+        logpath=$2_1 docker-compose -f $App_path/docker-compose.yml scale zivame=1 ;
+        logpath=$2_1 docker-compose -f $App_path/docker-compose.yml scale zivame=2 ;
+        service zivame config-reload
+        service zivame health
+        old_app_instance=$(service zivame state | awk '{print $1}' | tail -n2 |head -n1)
+        docker rm $(docker stop $old_app_instance)
+        else
+        echo "Not Running newstack.zivame.com"
         start_status=$(logpath="${LogPath}" docker-compose -f $App_path/docker-compose.yml up -d)
         echo "start_status"
         status=$(docker-compose -f $App_path/docker-compose.yml ps)
         echo "$status" 
         echo "Staring ...."
+        fi
         ;;
     start-stage)
         start_status=$(logpath="${LogPath}" docker-compose -f $App_path/docker-compose-stage.yml up -d)
@@ -58,7 +72,7 @@ case "${CMD}" in
     scale)
        count_before=$(logpath="${LogPath}" sudo docker-compose -f $App_path/docker-compose.yml ps |wc -l)
         echo "$(($count_before - $2))" 
-        if [[ "$2" -gt 1 || "$(($count_before - $2 - 3))" -ne "0" ]]; then
+        if [[ "$2" -gt 1 || "$(($count_before - $2 - 2))" -ne "0" ]]; then
         for (( i=1; i <= $2; ++i )); do
         logpath=$3_$i docker-compose -f $App_path/docker-compose.yml scale zivame=$i ;
         done
@@ -82,7 +96,7 @@ case "${CMD}" in
         ;; 
     health)
         ports=$(sudo docker-compose -f $App_path/docker-compose.yml ps |grep -o -P '(?<=:).*(?=-)');
-        for port in $ports; do while(true); do if(curl -I localhost:$port|head -n1|grep 200) ;then break;else echo "localhost:$port" ;sleep 15;fi; done  done
+        for port in $ports; do while(true); do if(curl -I localhost:$port|head -n1|grep 200) ;then break;else echo "localhost:$port" ;sleep 10;fi; done  done
         ;;
     health-stage)
         ports=$(sudo docker-compose -f $App_path/docker-compose.yml ps |grep -o -P '(?<=:).*(?=-)');
