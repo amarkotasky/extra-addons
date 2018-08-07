@@ -10,7 +10,8 @@ services:
     environment:
       - nodeVersion   
     volumes:
-      - "${logpath}:/home/ubuntu/newstack/app/log"        
+      - "${logpath}:/home/ubuntu/newstack/app/log"
+    command: Devel              
     # deploy:
     #   replicas: 2 
     # depends_on:

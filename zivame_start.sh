@@ -7,7 +7,7 @@ chmod -R 777 environment.sh
 chmod -R 777 stageEnv.sh
 
 
-if [ "$INT_APP_Env" == "Devel"  ]; then
+if [ "$1" == "Devel"  ]; then
    echo ". environment.sh" >> ~/.bashrc \
    && . ~/.bashrc
    . environment.sh
