@@ -4,11 +4,21 @@
 ######                               Set enviornment variables
 ###################################################################################################
 chmod -R 777 environment.sh
+chmod -R 777 stageEnv.sh
 
-echo ". environment.sh" >> ~/.bashrc \
-&& . ~/.bashrc
-. environment.sh
-echo $INT_APP_Env
+
+if [ "$INT_APP_Env" == "Devel"  ]; then
+   echo ". environment.sh" >> ~/.bashrc \
+   && . ~/.bashrc
+   . environment.sh
+   echo $INT_APP_Env
+else
+   echo ". stageEnv.sh" >> ~/.bashrc \
+   && . ~/.bashrc
+   . stageEnv.sh
+   echo $INT_APP_Env
+fi
+
 
 export NVM_DIR="$HOME/.nvm"
  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
