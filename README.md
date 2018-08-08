@@ -1,2 +1,2 @@
-# zivame-addons-Devel
+# Zivame-Addons-Devel
 ## Description
