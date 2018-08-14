@@ -35,7 +35,7 @@ validate_compose_1_6_plus
 
 case "${CMD}" in
     start)
-        docker exec -it zivame_nginx bash -c 'nginx -t && service nginx reload'
+        docker exec -t zivame_nginx bash -c 'nginx -t && service nginx reload'
         s1=$(curl -I http://newstack.zivame.com |head -n1|grep 200)
         s2="200"
         if [[ $s1 == *"$s2"* ]]
@@ -46,7 +46,6 @@ case "${CMD}" in
         service zivame health
         docker exec -it zivame_nginx bash -c 'nginx -t && service nginx reload'
         docker rm $(docker stop $old_cn)
-        docker exec -it zivame_nginx bash -c 'nginx -t && service nginx reload'
         else
         echo "!! Alert Not Running newstack.zivame.com"
         start_status=$(logpath="${LogPath}" docker-compose -f $App_path/docker-compose.yml up -d)
@@ -108,7 +107,7 @@ case "${CMD}" in
         for port in $ports; do while(true); do if(curl -I localhost:$port|head -n1|grep 301) ;then break;else echo "localhost:$port" ;sleep 15;fi; done  done
         ;;         
     config-reload)
-        docker exec -it zivame_nginx bash -c 'nginx -t && service nginx reload'
+        docker exec -t zivame_nginx bash -c 'nginx -t && service nginx reload'
         ;;     
     logs)
         log_status=$(docker-compose -f $App_path/docker-compose.yml logs)
