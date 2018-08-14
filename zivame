@@ -53,9 +53,9 @@ case "${CMD}" in
         echo "start_status"
         status=$(docker-compose -f $App_path/docker-compose.yml ps)
         service zivame health
+        docker exec -it zivame_nginx bash -c 'nginx -t && service nginx reload'
         logpath=$2 docker-compose -f $App_path/docker-compose.yml scale zivame=2 ;
         service zivame health
-        docker exec -it zivame_nginx bash -c 'nginx -t && service nginx reload'
         echo "$status" 
         echo "Staring Application ...."
         fi
