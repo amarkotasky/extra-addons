@@ -44,7 +44,7 @@ case "${CMD}" in
         old_cn=$(service zivame state | grep app | awk '{print $1}')
         logpath=$2 docker-compose -f $App_path/docker-compose.yml scale zivame=4 ;
         service zivame health
-        docker exec -it zivame_nginx bash -c 'nginx -t && service nginx reload'
+        docker exec -t zivame_nginx bash -c 'nginx -t && service nginx reload'
         docker rm $(docker stop $old_cn)
         else
         echo "!! Alert Not Running newstack.zivame.com"
@@ -52,7 +52,7 @@ case "${CMD}" in
         echo "start_status"
         status=$(docker-compose -f $App_path/docker-compose.yml ps)
         service zivame health
-        docker exec -it zivame_nginx bash -c 'nginx -t && service nginx reload'
+        docker exec -t zivame_nginx bash -c 'nginx -t && service nginx reload'
         logpath=$2 docker-compose -f $App_path/docker-compose.yml scale zivame=2 ;
         service zivame health
         echo "$status" 
