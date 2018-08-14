@@ -35,24 +35,29 @@ validate_compose_1_6_plus
 
 case "${CMD}" in
     start)
+        docker exec -it zivame_nginx bash -c 'nginx -t && service nginx reload'
         s1=$(curl -I http://newstack.zivame.com |head -n1|grep 200)
         s2="200"
         if [[ $s1 == *"$s2"* ]]
         then
         echo "${LogPath}"
-        logpath=$2_1 docker-compose -f $App_path/docker-compose.yml scale zivame=1 ;
-        logpath=$2_1 docker-compose -f $App_path/docker-compose.yml scale zivame=2 ;
-        service zivame config-reload
+        old_cn=$(service zivame state | grep app | awk '{print $1}')
+        logpath=$2 docker-compose -f $App_path/docker-compose.yml scale zivame=4 ;
         service zivame health
-        old_app_instance=$(service zivame state | awk '{print $1}' | tail -n2 |head -n1)
-        docker rm $(docker stop $old_app_instance)
+        docker exec -it zivame_nginx bash -c 'nginx -t && service nginx reload'
+        docker rm $(docker stop $old_cn)
+        docker exec -it zivame_nginx bash -c 'nginx -t && service nginx reload'
         else
-        echo "Not Running newstack.zivame.com"
+        echo "!! Alert Not Running newstack.zivame.com"
         start_status=$(logpath="${LogPath}" docker-compose -f $App_path/docker-compose.yml up -d)
         echo "start_status"
         status=$(docker-compose -f $App_path/docker-compose.yml ps)
+        service zivame health
+        logpath=$2 docker-compose -f $App_path/docker-compose.yml scale zivame=2 ;
+        service zivame health
+        docker exec -it zivame_nginx bash -c 'nginx -t && service nginx reload'
         echo "$status" 
-        echo "Staring ...."
+        echo "Staring Application ...."
         fi
         ;;
     start-stage)
@@ -95,15 +100,15 @@ case "${CMD}" in
         echo "$status" 
         ;; 
     health)
-        ports=$(sudo docker-compose -f $App_path/docker-compose.yml ps |grep -o -P '(?<=:).*(?=-)');
-        for port in $ports; do while(true); do if(curl -I localhost:$port|head -n1|grep 200) ;then break;else echo "localhost:$port" ;sleep 10;fi; done  done
+        ports=$(sudo docker container ls --last 2 | grep app |grep -o -P '(?<=:).*(?=-)');
+        for port in $ports; do while(true); do if(curl -I localhost:$port|head -n1|grep 200) ;then break;else echo "localhost:$port" ;sleep 5;fi; done  done
         ;;
     health-stage)
         ports=$(sudo docker-compose -f $App_path/docker-compose.yml ps |grep -o -P '(?<=:).*(?=-)');
         for port in $ports; do while(true); do if(curl -I localhost:$port|head -n1|grep 301) ;then break;else echo "localhost:$port" ;sleep 15;fi; done  done
         ;;         
     config-reload)
-        ports=$(sudo docker-compose -f $App_path/docker-compose.yml ps | grep 0.0.0.0 | grep -o -P '(?<=:).*(?=-)') ;upstream="";for i in $ports; do upstream+="server localhost:$i;"; done ; ngxupstream="upstream app_upstream { $upstream }";echo "$ngxupstream";sudo sed -i -E "s/(upstream app_upstream)+.\{(.*?)\}/$ngxupstream/" /etc/nginx/sites-enabled/default && sudo  nginx -t && sudo service nginx reload
+        docker exec -it zivame_nginx bash -c 'nginx -t && service nginx reload'
         ;;     
     logs)
         log_status=$(docker-compose -f $App_path/docker-compose.yml logs)
