@@ -10,7 +10,7 @@ services:
     environment:
       - nodeVersion   
     volumes:
-      - "${logpath}:/home/ubuntu/newstack/app/log"
+      - "${logpath}:/mnt/node-logs/log"
     command: Stage
 
   ziva-redis:
